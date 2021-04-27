@@ -1,6 +1,8 @@
+/* css properties */
 :root {
   --color-body-bg:rgb(246, 246, 247);
   --spacing-medium: 15px;
+  --spacing-small: 10px;
 }
 
 /* reset default styles */
@@ -10,6 +12,8 @@
   margin: 0;
   padding: 0;
 }
+
+/* base style */
 
 body {
   background-color: var(--color-body-bg);
@@ -21,6 +25,7 @@ body {
 
 .main-content {
   flex-basis: 1200px;
+  padding: 0 var(--spacing-small);
 }
 
 .search,
@@ -30,12 +35,25 @@ body {
   padding: var(--spacing-medium);
 }
 
+/* search component */
 .search {
   margin: var(--spacing-medium) 0;
 }
 
+.search__input {
+  width: 100%;
+}
+
+/* utilities */
 .wrapper--grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: var(--spacing-medium);
+}
+
+@media only screen and (max-width: 749px) {
+  .wrapper--grid {
+    grid-template-columns: 1fr;
+    grid-row-gap: var(--spacing-medium);
+  }
 }
