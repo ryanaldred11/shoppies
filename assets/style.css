@@ -1,16 +1,23 @@
 /* css properties */
 :root {
   --color-body-bg:rgb(246, 246, 247);
-  --spacing-medium: 15px;
-  --spacing-small: 10px;
+  --spacing-medium: 1.5rem;
+  --spacing-small: 1rem;
 }
 
 /* reset default styles */
 *,
 *::before,
 *::after {
+  box-sizing: inherit;
   margin: 0;
   padding: 0;
+}
+
+html {
+  box-sizing: border-box;
+  /* 1rem = 10px in standard browsers */
+  font-size: 62.5%;
 }
 
 /* base style */
@@ -21,10 +28,11 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  font-size: 2rem;
 }
 
 .main-content {
-  flex-basis: 1200px;
+  flex-basis: 120rem;
   padding: 0 var(--spacing-small);
 }
 
