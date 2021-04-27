@@ -1,0 +1,41 @@
+:root {
+  --color-body-bg:rgb(246, 246, 247);
+  --spacing-medium: 15px;
+}
+
+/* reset default styles */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-body-bg);
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.main-content {
+  flex-basis: 1200px;
+}
+
+.search,
+.results,
+.nominations {
+  background-color: rgb(255, 255, 255);
+  padding: var(--spacing-medium);
+}
+
+.search {
+  margin: var(--spacing-medium) 0;
+}
+
+.wrapper--grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: var(--spacing-medium);
+}
