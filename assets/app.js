@@ -34,15 +34,38 @@ shoppie.Render = function Render(searchInput, resultsList) {
   }
 
   // listen for interaction with input and get movies
-  this.selectors.searchInput.addEventListener('input', e => {
-    this._onSearch(e.target.value);
-  });
+  // this.selectors.searchInput.addEventListener('input', e => {
+    // this._onSearch(e.target.value);
+  // });
+  this.selectors.searchInput.addEventListener('input', utilities._debounce(this._searchMovies, 500));
 };
 
 shoppie.Render.prototype = Object.assign({}, shoppie.Render.prototype, {
-  _onSearch: function(query) {
-    ajax.searchMovies("s", query);
+  _searchMovies: function(e) {
+    ajax.searchMovies("s", e.target.value);
   }
 });
 
+
+
+shoppie.Utilities = function Render() {
+
+}
+
+shoppie.Utilities.prototype = Object.assign({}, shoppie.Render.prototype, {
+  _debounce: function(func, delay = 1000) {
+    let timeoutId;
+    return function(...args) {
+      if(timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      timeoutId = setTimeout(function() {
+        func.apply(null, args);
+      }, delay);
+    };
+  }
+});
+
+const utilities = new shoppie.Utilities();
 const render = new shoppie.Render(".search__input", ".results__list");
