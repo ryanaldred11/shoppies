@@ -26,12 +26,12 @@ body {
   background-color: var(--color-body-bg);
   display:flex;
   justify-content: center;
-  align-items: center;
   height: 100vh;
   font-size: 2rem;
 }
 
 .main-content {
+  margin-top: 20vh;
   flex-basis: 120rem;
   padding: 0 var(--spacing-small);
 }
