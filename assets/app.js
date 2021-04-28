@@ -27,7 +27,7 @@ const ajax = (function() {
 // ajax.searchMovies('s', 'fight');
 // ajax.searchMovies('s', 'fightjfkdsjf');
 
-shoppie.Render = function Render(searchInput, resultsList) {
+shoppie.Search = function Search(searchInput, resultsList) {
   this.selectors = {
     searchInput: document.querySelector(searchInput),
     resultsList: document.querySelector(resultsList)
@@ -40,7 +40,7 @@ shoppie.Render = function Render(searchInput, resultsList) {
   this.selectors.searchInput.addEventListener('input', utilities._debounce(this._searchMovies, 500));
 };
 
-shoppie.Render.prototype = Object.assign({}, shoppie.Render.prototype, {
+shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
   _searchMovies: function(e) {
     ajax.searchMovies("s", e.target.value);
   }
@@ -52,7 +52,7 @@ shoppie.Utilities = function Render() {
 
 }
 
-shoppie.Utilities.prototype = Object.assign({}, shoppie.Render.prototype, {
+shoppie.Utilities.prototype = Object.assign({}, shoppie.Utilities.prototype, {
   _debounce: function(func, delay = 1000) {
     let timeoutId;
     return function(...args) {
@@ -68,4 +68,4 @@ shoppie.Utilities.prototype = Object.assign({}, shoppie.Render.prototype, {
 });
 
 const utilities = new shoppie.Utilities();
-const render = new shoppie.Render(".search__input", ".results__list");
+const search = new shoppie.Search(".search__input", ".results__list");
