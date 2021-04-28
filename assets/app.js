@@ -8,12 +8,12 @@ const ajax = (function() {
       .then(res => res.json())
       .then(data => {
         if(data.Response == "True") {
-          console.log('valid search, do stuff');
+          console.log(data);
         } else {
-          console.log('invalid search: ' + data.Error);
+          console.log('Invalid search: ' + data.Error);
         }
       })
-      .catch(err => console.log('something went wrong: ' + err));
+      .catch(err => console.log('Something went wrong: ' + err));
     }
   }
   return publicFunctions;
