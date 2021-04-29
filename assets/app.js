@@ -84,8 +84,6 @@ shoppie.Utilities = function Render() {
 
 shoppie.Utilities.prototype = Object.assign({}, shoppie.Utilities.prototype, {
   _debounce: function(func, delay = 1000) {
-    console.log('debounce this:')
-    console.log(this);
     let timeoutId;
     return function(...args) {
       if(timeoutId) {
