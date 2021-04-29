@@ -43,6 +43,11 @@ shoppie.Search = function Search(searchInput, resultsList) {
 shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
   _searchMovies: function(e) {
     ajax.searchMovies("s", e.target.value);
+  },
+  _renderMovies: function(movies) {
+    for (let movie of movies) {
+      console.log(movies);
+    };
   }
 });
 
