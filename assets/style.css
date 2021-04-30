@@ -65,3 +65,24 @@ body {
     grid-row-gap: var(--spacing-medium);
   }
 }
+
+/* MOVIE COMPONENT STYLE */
+.movie {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  align-items: center;
+  background-color: var(--color-body-bg);
+  border-radius: 5px;
+  padding: var(--spacing-small);
+}
+
+.movie:not(:last-of-type) {
+  margin-bottom: var(--spacing-medium);
+}
+
+.movie__poster {
+  max-width: 90px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.6);
+  margin-right: var(--spacing-medium);
+}

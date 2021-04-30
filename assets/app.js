@@ -47,7 +47,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
         const resultsList = document.querySelector('.results__list');
         for (let movie of movies) {
           const item = document.createElement('li');
-          item.classList = 'results__list-item';
+          item.classList = 'movie';
           item.innerHTML = this._renderMovie(movie);
           this.selectors.resultsList.appendChild(item);
         }
@@ -60,8 +60,17 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
     .catch(err => console.log('Something went wrong: ' + err));
   },
   _renderMovie: function(movie) {
+    const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
+    console.log(movie);
     return `
-      <h4>${movie.Title}</h4>
+      <img src="${imgSrc}" class="movie__poster">
+      <div class="movie__details">
+        <h4 class="movie__title">${movie.Title}</h4>
+        <small class="movie__year">${movie.Year}</small>
+      </div>
+      <button class="btn btn--primary" id="nominate-btn" data-id=${movie.imdbID}>
+        Nominate
+      </button>
     `;
   },
   _doSomething: function() {
