@@ -27,8 +27,22 @@ shoppie.Search = function Search(searchInput, resultsList) {
     resultsList: document.querySelector(resultsList)
   }
 
+  // set nominations array or get nominations from local storage
+  if(localStorage.getItem('nominations') === null) {
+    this.nominations = [];
+  } else {
+    this.nominations = JSON.parse(localStorage.getItem('nominations'));
+  };
+
   // listen for interaction with input and get movies
   this.selectors.searchInput.addEventListener('input', debounce(this._onSearch.bind(this)));
+
+  // listen for nominations
+  this.selectors.resultsList.addEventListener('click', (e) => {
+    if(e.target.id === 'nominate-btn') {
+      this._onNominate(e.target.dataset.id);
+    }
+  })
 };
 
 
@@ -73,6 +87,18 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       </button>
     `;
   },
+  _onNominate: function(nominee) {
+    if(this.nominations.includes(nominee)) {
+      console.log('this movie has already been nominated')
+    } else {
+      this.nominations.push(nominee);
+      this._updateNominationsInLocalStorage();
+      this._doSomething();
+    }
+  },
+  _updateNominationsInLocalStorage: function() {
+    localStorage.setItem('nominations', JSON.stringify(this.nominations));
+  },
   _doSomething: function() {
     console.log('doing a thing');
   }
@@ -91,4 +117,4 @@ debounce = function(func, delay = 1000) {
   };
 }
 
-const search = new shoppie.Search(".search__input", ".results__list");
+const app = new shoppie.Search(".search__input", ".results__list");
