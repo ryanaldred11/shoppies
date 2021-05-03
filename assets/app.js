@@ -25,7 +25,8 @@ shoppie.Search = function Search(searchInput, resultsList, nominationsList) {
   this.selectors = {
     searchInput: document.querySelector(searchInput),
     resultsList: document.querySelector(resultsList),
-    nominationsList: document.querySelector(nominationsList)
+    nominationsList: document.querySelector(nominationsList),
+    banner: document.querySelector('.banner')
   }
 
   // set nominations array or get nominations from local storage
@@ -35,6 +36,9 @@ shoppie.Search = function Search(searchInput, resultsList, nominationsList) {
     this.nominations = JSON.parse(localStorage.getItem('nominations'));
     this._renderNominations(this.nominations);
   };
+
+  // do some stuff on load
+  document.addEventListener('DOMContentLoaded', this._onLoad());
 
   // listen for interaction with input and get movies
   this.selectors.searchInput.addEventListener('keydown', debounce(this._onSearch.bind(this)));
@@ -56,6 +60,13 @@ shoppie.Search = function Search(searchInput, resultsList, nominationsList) {
 
 
 shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
+  _onLoad: function() {
+    // check to see if theyve already voted for 5 movies
+    if (this.nominations.length >= 5) {
+      this.selectors.banner.classList.remove('hide');
+      this.selectors.banner.innerText = 'Voting complete! You will need to remove a nomination before you can add another one'
+    }
+  },
   _onSearch: function(e) {
     
     const apiKey = "c23f3411";
@@ -145,6 +156,12 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       movieElement.remove();
       this.nominations.pop(id);
       this._updateNominationsInLocalStorage();
+
+      // if they removed the 5th nomination, hide the banner
+      if (this.nominations.length < 5 && !this.selectors.banner.classList.contains('hide')) {
+        this.selectors.banner.classList.add('hide');
+        this.selectors.banner.innerText = '';
+      }
     }
   },
   _doSomething: function(where) {

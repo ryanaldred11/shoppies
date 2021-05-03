@@ -1,8 +1,14 @@
 /* css properties */
 :root {
   --color-body-bg:rgb(246, 246, 247);
-  --spacing-medium: 1.5rem;
+  --color-notice: rgba(255, 245, 234, 1);
+  --color-notice-border: rgba(225, 184, 120, 1);
+
   --spacing-small: 1rem;
+  --spacing-medium: 1.5rem;
+  --spacing-large: 2.5rem;
+  
+  --border-radius-wide: 0.8rem;
 }
 
 /* reset default styles */
@@ -85,4 +91,18 @@ body {
   border-radius: 5px;
   box-shadow: 5px 5px 5px rgba(0,0,0,0.6);
   margin-right: var(--spacing-medium);
+}
+
+/* BANNER STYLE */
+.banner {
+  background-color: var(--color-notice);
+  border: 1px solid var(--color-notice-border);
+  border-radius: var(--border-radius-wide);
+  padding: var(--spacing-large);
+  margin: var(--spacing-large) 0;
+}
+
+/* UTILITIES */
+.hide {
+  display: none;
 }
