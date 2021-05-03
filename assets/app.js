@@ -69,10 +69,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
         const movies = data.Search;
         const resultsList = document.querySelector('.results__list');
         for (let movie of movies) {
-          const item = document.createElement('li');
-          item.classList = 'movie';
-          item.innerHTML = this._renderMovie(movie, 'search');
-          this.selectors.resultsList.appendChild(item);
+          this.selectors.resultsList.appendChild(this._renderMovie(movie, 'search'));
         }
       } else {
         // search didn't return movies, explain why
@@ -82,9 +79,10 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
     // search request failed
     .catch(err => console.log('Something went wrong: ' + err));
   },
-  _renderMovie: function(movie, type = 'nomination') {
+  _renderMovie: function(movie, type = 'nomination') {    
     const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
     let cta, btnId;
+
     if(type === 'search') {
       cta = 'Nominate';
       btnId = 'nominate-btn';
@@ -92,8 +90,11 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       cta = 'Remove';
       btnId = 'remove-btn';
     }
+
+    const movieItem = document.createElement('li');
+    movieItem.classList = 'movie';
     
-    return `
+    movieItem.innerHTML =  `
       <img src="${imgSrc}" class="movie__poster">
       <div class="movie__details">
         <h4 class="movie__title">${movie.Title}</h4>
@@ -103,13 +104,15 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
         ${cta}
       </button>
     `;
+
+    return movieItem;
   },
   _onNominate: function(nominee) {
     if(this.nominations.includes(nominee)) {
       console.log('this movie has already been nominated')
     } else {
       this.nominations.push(nominee);
-      
+
       this._updateNominationsInLocalStorage();
       this._doSomething();
     }
@@ -127,10 +130,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
         fetch(`${baseUrl}i=${id}`)
         .then(res => res.json())
         .then(movie => {
-          const nominee = document.createElement('li');
-          nominee.classList = 'movie';
-          nominee.innerHTML = this._renderMovie(movie, 'nominations');
-          this.selectors.nominationsList.appendChild(nominee);
+          this.selectors.nominationsList.appendChild(this._renderMovie(movie, 'nominations'));
         })
         .catch(err => console.log(err));
     
