@@ -21,10 +21,11 @@ window.shoppie = window.shoppie || {};
 //   return publicFunctions;
 // })();
 
-shoppie.Search = function Search(searchInput, resultsList) {
+shoppie.Search = function Search(searchInput, resultsList, nominationsList) {
   this.selectors = {
     searchInput: document.querySelector(searchInput),
-    resultsList: document.querySelector(resultsList)
+    resultsList: document.querySelector(resultsList),
+    nominationsList: document.querySelector(nominationsList)
   }
 
   // set nominations array or get nominations from local storage
@@ -32,6 +33,7 @@ shoppie.Search = function Search(searchInput, resultsList) {
     this.nominations = [];
   } else {
     this.nominations = JSON.parse(localStorage.getItem('nominations'));
+    this._renderNominations(this.nominations);
   };
 
   // listen for interaction with input and get movies
@@ -41,6 +43,13 @@ shoppie.Search = function Search(searchInput, resultsList) {
   this.selectors.resultsList.addEventListener('click', (e) => {
     if(e.target.id === 'nominate-btn') {
       this._onNominate(e.target.dataset.id);
+    }
+  })
+
+  // listen for un-nominations
+  this.selectors.nominationsList.addEventListener('click', (e) => {
+    if(e.target.id === 'remove-btn') {
+      this._onUnNominate(e);
     }
   })
 };
@@ -62,7 +71,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
         for (let movie of movies) {
           const item = document.createElement('li');
           item.classList = 'movie';
-          item.innerHTML = this._renderMovie(movie);
+          item.innerHTML = this._renderMovie(movie, 'search');
           this.selectors.resultsList.appendChild(item);
         }
       } else {
@@ -73,17 +82,25 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
     // search request failed
     .catch(err => console.log('Something went wrong: ' + err));
   },
-  _renderMovie: function(movie) {
+  _renderMovie: function(movie, type = 'nomination') {
     const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
-    console.log(movie);
+    let cta, btnId;
+    if(type === 'search') {
+      cta = 'Nominate';
+      btnId = 'nominate-btn';
+    } else {
+      cta = 'Remove';
+      btnId = 'remove-btn';
+    }
+    
     return `
       <img src="${imgSrc}" class="movie__poster">
       <div class="movie__details">
         <h4 class="movie__title">${movie.Title}</h4>
         <small class="movie__year">${movie.Year}</small>
       </div>
-      <button class="btn btn--primary" id="nominate-btn" data-id=${movie.imdbID}>
-        Nominate
+      <button class="btn btn--primary" id="${btnId}" data-id=${movie.imdbID}>
+        ${cta}
       </button>
     `;
   },
@@ -92,6 +109,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       console.log('this movie has already been nominated')
     } else {
       this.nominations.push(nominee);
+      
       this._updateNominationsInLocalStorage();
       this._doSomething();
     }
@@ -99,8 +117,38 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
   _updateNominationsInLocalStorage: function() {
     localStorage.setItem('nominations', JSON.stringify(this.nominations));
   },
-  _doSomething: function() {
-    console.log('doing a thing');
+  _renderNominations: function(nominations) {
+    if(nominations.length > 0) {
+      for(let id of nominations) {
+        // this.getNomination(nominee);
+        const apiKey = "c23f3411";
+        const baseUrl = `http://www.omdbapi.com/?apikey=${apiKey}&`;
+
+        fetch(`${baseUrl}i=${id}`)
+        .then(res => res.json())
+        .then(movie => {
+          const nominee = document.createElement('li');
+          nominee.classList = 'movie';
+          nominee.innerHTML = this._renderMovie(movie, 'nominations');
+          this.selectors.nominationsList.appendChild(nominee);
+        })
+        .catch(err => console.log(err));
+    
+      }
+    }
+  },
+  _onUnNominate: function(e) {
+    const id = e.target.dataset.id
+    const movieElement = e.target.parentElement;
+    console.log(e);
+    if (this.nominations.includes(id)) {
+      movieElement.remove();
+      this.nominations.pop(id);
+      this._updateNominationsInLocalStorage();
+    }
+  },
+  _doSomething: function(where) {
+    console.log('doing a thing ' + where);
   }
 });
 
@@ -117,4 +165,4 @@ debounce = function(func, delay = 1000) {
   };
 }
 
-const app = new shoppie.Search(".search__input", ".results__list");
+const app = new shoppie.Search(".search__input", ".results__list", ".nominations__list");
