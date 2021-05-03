@@ -92,11 +92,17 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
   },
   _renderMovie: function(movie, type = 'nomination') {    
     const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
-    let cta, btnId;
+    let cta, btnId, isDisabled;
+
+    isDisabled = '';
 
     if(type === 'search') {
       cta = 'Nominate';
       btnId = 'nominate-btn';
+
+      if(this.nominations.length >= 5) {
+        isDisabled = 'disabled=disable';
+      }
     } else {
       cta = 'Remove';
       btnId = 'remove-btn';
@@ -111,7 +117,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
         <h4 class="movie__title">${movie.Title}</h4>
         <small class="movie__year">${movie.Year}</small>
       </div>
-      <button class="btn btn--primary" id="${btnId}" data-id=${movie.imdbID}>
+      <button class="btn btn--primary" id="${btnId}" data-id=${movie.imdbID} ${isDisabled}>
         ${cta}
       </button>
     `;
