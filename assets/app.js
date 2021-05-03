@@ -37,12 +37,12 @@ shoppie.Search = function Search(searchInput, resultsList, nominationsList) {
   };
 
   // listen for interaction with input and get movies
-  this.selectors.searchInput.addEventListener('input', debounce(this._onSearch.bind(this)));
+  this.selectors.searchInput.addEventListener('keydown', debounce(this._onSearch.bind(this)));
 
   // listen for nominations
   this.selectors.resultsList.addEventListener('click', (e) => {
     if(e.target.id === 'nominate-btn') {
-      this._onNominate(e.target.dataset.id);
+      this._onNominate(e);
     }
   })
 
@@ -107,14 +107,15 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
 
     return movieItem;
   },
-  _onNominate: function(nominee) {
+  _onNominate: function(e) {
+    const nominee = e.target.dataset.id;
+    
     if(this.nominations.includes(nominee)) {
       console.log('this movie has already been nominated')
     } else {
+      this.selectors.nominationsList.appendChild((e.target.parentElement));
       this.nominations.push(nominee);
-
       this._updateNominationsInLocalStorage();
-      this._doSomething();
     }
   },
   _updateNominationsInLocalStorage: function() {
@@ -130,7 +131,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
         fetch(`${baseUrl}i=${id}`)
         .then(res => res.json())
         .then(movie => {
-          this.selectors.nominationsList.appendChild(this._renderMovie(movie, 'nominations'));
+          this.selectors.nominationsList.appendChild(this._renderMovie(movie));
         })
         .catch(err => console.log(err));
     
@@ -140,7 +141,6 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
   _onUnNominate: function(e) {
     const id = e.target.dataset.id
     const movieElement = e.target.parentElement;
-    console.log(e);
     if (this.nominations.includes(id)) {
       movieElement.remove();
       this.nominations.pop(id);
