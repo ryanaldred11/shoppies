@@ -92,11 +92,17 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
   },
   _renderMovie: function(movie, type = 'nomination') {    
     const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
-    let cta, btnId;
+    let cta, btnId, isDisabled;
+
+    isDisabled = '';
 
     if(type === 'search') {
       cta = 'Nominate';
       btnId = 'nominate-btn';
+
+      if(this.nominations.length >= 5) {
+        isDisabled = 'disabled=disable';
+      }
     } else {
       cta = 'Remove';
       btnId = 'remove-btn';
@@ -111,7 +117,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
         <h4 class="movie__title">${movie.Title}</h4>
         <small class="movie__year">${movie.Year}</small>
       </div>
-      <button class="btn btn--primary" id="${btnId}" data-id=${movie.imdbID}>
+      <button class="btn btn--primary" id="${btnId}" data-id=${movie.imdbID} ${isDisabled}>
         ${cta}
       </button>
     `;
@@ -127,6 +133,15 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       this.selectors.nominationsList.appendChild((e.target.parentElement));
       this.nominations.push(nominee);
       this._updateNominationsInLocalStorage();
+
+      if(this.nominations.length >= 5) {
+        const nominateBtns = document.querySelectorAll('#nominate-btn');
+        for(let btn of nominateBtns) {
+          btn.disabled = true;
+        }
+        this.selectors.banner.innerText = 'Voting complete! You will need to remove a nomination before you can add another one';
+        this.selectors.banner.classList.remove('hide');
+      }
     }
   },
   _updateNominationsInLocalStorage: function() {
