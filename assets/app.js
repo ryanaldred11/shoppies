@@ -133,6 +133,15 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       this.selectors.nominationsList.appendChild((e.target.parentElement));
       this.nominations.push(nominee);
       this._updateNominationsInLocalStorage();
+
+      if(this.nominations.length >= 5) {
+        const nominateBtns = document.querySelectorAll('#nominate-btn');
+        for(let btn of nominateBtns) {
+          btn.disabled = true;
+        }
+        this.selectors.banner.innerText = 'Voting complete! You will need to remove a nomination before you can add another one';
+        this.selectors.banner.classList.remove('hide');
+      }
     }
   },
   _updateNominationsInLocalStorage: function() {
