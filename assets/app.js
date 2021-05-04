@@ -130,10 +130,17 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
     if(this.nominations.includes(nominee)) {
       console.log('this movie has already been nominated')
     } else {
+      // push the nomination
+      e.target.innerText = 'Remove';
+      e.target.id = 'remove-btn';
       this.selectors.nominationsList.appendChild((e.target.parentElement));
       this.nominations.push(nominee);
       this._updateNominationsInLocalStorage();
+      
+      
 
+      // if they've voted for 5 movies, they are done
+      // show a banner and disable the voting buttons
       if(this.nominations.length >= 5) {
         const nominateBtns = document.querySelectorAll('#nominate-btn');
         for(let btn of nominateBtns) {
