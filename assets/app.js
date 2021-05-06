@@ -67,10 +67,11 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       this.selectors.banner.innerText = 'Voting complete! You will need to remove a nomination before you can add another one'
     }
   },
-  _onSearch: function(e) {
-    
+  _onSearch: function(e) {    
     const apiKey = "c23f3411";
     const baseUrl = `http://www.omdbapi.com/?apikey=${apiKey}&`;
+
+    this.selectors.resultsList.innerHTML = '';
 
     fetch(`${baseUrl}s=${e.target.value}`)
     .then(res => res.json())
@@ -78,7 +79,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       if(data.Response == "True") {
         // search returned movies, now render them
         const movies = data.Search;
-        const resultsList = document.querySelector('.results__list');
+
         for (let movie of movies) {
           this.selectors.resultsList.appendChild(this._renderMovie(movie, 'search'));
         }
