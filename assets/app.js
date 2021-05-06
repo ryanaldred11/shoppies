@@ -174,9 +174,14 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
   _onUnNominate: function(e) {
     const id = e.target.dataset.id
     const movieElement = e.target.parentElement;
+    console.log(id);
+
     if (this.nominations.includes(id)) {
       movieElement.remove();
-      this.nominations.pop(id);
+
+      // get the index of the movie and then remove it from the list and update local storage
+      const idx = this.nominations.indexOf(id);
+      this.nominations.splice(idx, 1);    
       this._updateNominationsInLocalStorage();
 
       // if they removed the 5th nomination, hide the banner
