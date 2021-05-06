@@ -100,7 +100,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       cta = 'Nominate';
       btnId = 'nominate-btn';
 
-      if(this.nominations.length >= 5) {
+      if(this.nominations.length >= 5 || type === 'search' && this.nominations.includes(movie.imdbID)) {
         isDisabled = 'disabled=disable';
       }
     } else {
