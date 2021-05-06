@@ -101,7 +101,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       btnId = 'nominate-btn';
 
       if(this.nominations.length >= 5 || type === 'search' && this.nominations.includes(movie.imdbID)) {
-        isDisabled = 'disabled=disable';
+        isDisabled = 'disabled';
       }
     } else {
       cta = 'Remove';
@@ -184,6 +184,14 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
         this.selectors.banner.classList.add('hide');
         this.selectors.banner.innerText = '';
       }
+
+      // re-enable the nominate btn if the movie is in the list
+      const searchResults = document.querySelectorAll('.results__list .movie');
+      searchResults.forEach(movie => {
+        if(id == movie.lastElementChild.dataset.id) {
+          movie.lastElementChild.disabled = false;
+        }
+      });
     }
   },
   _doSomething: function(where) {
