@@ -1,8 +1,12 @@
 /* css properties */
 :root {
   --color-body-bg:rgb(246, 246, 247);
+  --color-border-primary: #DDDDDD;
+  --color-form-focus: rgba(81, 203, 238, 1);
   --color-notice: rgba(255, 245, 234, 1);
   --color-notice-border: rgba(225, 184, 120, 1);
+
+  --font-family-primary: -apple-system,BlinkMacSystemFont,San Francisco,Segoe UI,Roboto,Helvetica Neue,sans-serif;
 
   --spacing-small: 1rem;
   --spacing-medium: 1.5rem;
@@ -11,7 +15,7 @@
   --border-radius-wide: 0.8rem;
 }
 
-/* reset default styles */
+/* reset default styles and set sizing */
 *,
 *::before,
 *::after {
@@ -26,18 +30,20 @@ html {
   font-size: 62.5%;
 }
 
-/* base style */
+/* base layout and style */
 
 body {
   background-color: var(--color-body-bg);
   display:flex;
   justify-content: center;
+  font-family: var(--font-family-primary);
+  font-size: 2.5em;
   height: 100vh;
-  font-size: 2rem;
+
 }
 
 .main-content {
-  margin-top: 20vh;
+  margin-top: 5vh;
   flex-basis: 120rem;
   padding: 0 var(--spacing-small);
 }
@@ -49,13 +55,36 @@ body {
   padding: var(--spacing-medium);
 }
 
+/* input style */
+input {
+  border: 2px solid var(--color-border-primary);
+  font-size: 2.3rem;
+  outline: 0;
+  transition: all .3s ease-in-out;
+  margin: 5px 1px 3px 0px;
+}
+
+input:focus {
+  border: 2px solid var(--color-form-focus);
+  box-shadow: 0 0 7px var(--color-form-focus);
+  margin: 5px 1px 3px 0px;
+}
+
 /* search component */
 .search {
   margin: var(--spacing-medium) 0;
 }
 
 .search__input {
+  border-radius: 10px;
+  padding: var(--spacing-small);
   width: 100%;
+}
+
+.search__title,
+.results__title,
+.nominations__title {
+  margin: var(--spacing-medium) 0;
 }
 
 /* utilities */
