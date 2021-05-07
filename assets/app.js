@@ -100,6 +100,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
     if(type === 'search') {
       cta = 'Nominate';
       btnId = 'nominate-btn';
+      classList = 'btn btn--primary';
 
       if(this.nominations.length >= 5 || type === 'search' && this.nominations.includes(movie.imdbID)) {
         isDisabled = 'disabled';
@@ -107,6 +108,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
     } else {
       cta = 'Remove';
       btnId = 'remove-btn';
+      classList = 'btn btn--destroy';
     }
 
     const movieItem = document.createElement('li');
@@ -118,7 +120,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
         <h4 class="movie__title">${movie.Title}</h4>
         <small class="movie__year">${movie.Year}</small>
       </div>
-      <button class="btn btn--primary" id="${btnId}" data-id=${movie.imdbID} ${isDisabled}>
+      <button class="${classList}" id="${btnId}" data-id=${movie.imdbID} ${isDisabled}>
         ${cta}
       </button>
     `;
