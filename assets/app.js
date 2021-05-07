@@ -193,6 +193,14 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       if (this.nominations.length < 5 && !this.selectors.banner.classList.contains('hide')) {
         this.selectors.banner.classList.add('hide');
         this.selectors.banner.innerText = '';
+
+        // re-enable the nomination buttons, except for already nominated buttons
+        const nominateBtns = document.querySelectorAll('#nominate-btn');
+        for(let btn of nominateBtns) {
+          if(!this.nominations.includes(btn.dataset.id)) {
+            btn.disabled = false;
+          }
+        }
       }
 
       // re-enable the nominate btn if the movie is in the list
