@@ -134,6 +134,8 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       // push the nomination
       e.target.innerText = 'Remove';
       e.target.id = 'remove-btn';
+      e.target.classList.remove('btn--primary');
+      e.target.classList.add('btn--destroy');
       this.selectors.nominationsList.appendChild((e.target.parentElement));
       this.nominations.push(nominee);
       this._updateNominationsInLocalStorage();
