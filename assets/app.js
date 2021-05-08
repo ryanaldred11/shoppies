@@ -179,7 +179,6 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
   _onUnNominate: function(e) {
     const id = e.target.dataset.id
     const movieElement = e.target.parentElement;
-    console.log(id);
 
     if (this.nominations.includes(id)) {
       movieElement.remove();
