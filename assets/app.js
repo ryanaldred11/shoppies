@@ -166,7 +166,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       for(let id of nominations) {
         // this.getNomination(nominee);
         const apiKey = "c23f3411";
-        const baseUrl = `http://www.omdbapi.com/?apikey=${apiKey}&`;
+        const baseUrl = `https://www.omdbapi.com/?apikey=${apiKey}&`;
 
         fetch(`${baseUrl}i=${id}`)
         .then(res => res.json())
