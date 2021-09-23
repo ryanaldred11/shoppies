@@ -212,3 +212,24 @@ body {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* PROJECT WRITEUP */
+.writeup {
+  max-width: 78rem;
+  padding: 2rem;
+}
+.site-title--writeup {
+  padding-top: 2rem;
+  margin-bottom: 6rem;
+
+}
+
+.writeup__h3 {
+  margin-bottom: .7rem;
+}
+
+.writeup__p {
+  font-size: 2.1rem;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
