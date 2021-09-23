@@ -72,6 +72,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
     const baseUrl = `http://www.omdbapi.com/?apikey=${apiKey}&`;
 
     this.selectors.resultsList.innerHTML = '';
+    this.selectors.resultsList.classList.toggle('loading');
 
     fetch(`${baseUrl}s=${e.target.value}`)
     .then(res => res.json())
@@ -89,7 +90,8 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       }
     })
     // search request failed
-    .catch(err => console.log('Something went wrong: ' + err));
+    .catch(err => console.log('Something went wrong: ' + err))
+    .finally(() => this.selectors.resultsList.classList.toggle('loading'));
   },
   _renderMovie: function(movie, type = 'nomination') {    
     const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
@@ -164,7 +166,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
       for(let id of nominations) {
         // this.getNomination(nominee);
         const apiKey = "c23f3411";
-        const baseUrl = `http://www.omdbapi.com/?apikey=${apiKey}&`;
+        const baseUrl = `https://www.omdbapi.com/?apikey=${apiKey}&`;
 
         fetch(`${baseUrl}i=${id}`)
         .then(res => res.json())
