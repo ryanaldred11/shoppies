@@ -69,7 +69,7 @@ shoppie.Search.prototype = Object.assign({}, shoppie.Search.prototype, {
   },
   _onSearch: function(e) {    
     const apiKey = "c23f3411";
-    const baseUrl = `http://www.omdbapi.com/?apikey=${apiKey}&`;
+    const baseUrl = `https://www.omdbapi.com/?apikey=${apiKey}&`;
 
     this.selectors.resultsList.innerHTML = '';
     this.selectors.resultsList.classList.toggle('loading');
