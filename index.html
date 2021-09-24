@@ -8,27 +8,44 @@
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-  <div class="main-content">
-    <h1 class="site-title">The Shoppies</h1>
-    <p>Please nominate 5 movies for the 2021 Shoppies</p>
-    <div class="banner hide"></div>
-    <div class="search">
-      <h3 class="search__title">Search for a movie to nominate</h3>
-      <input type="search" class="search__input" id="search" placeholder="Ex: Fight Club">
-    </div>
-    <div class="wrapper--grid">
-      <div class="results">
-        <h3 class="results__title">Results</h3>
-        <ul class="results__list"></ul>
+  <header class="header">
+    <div class="header__container">
+      <div class="header--left">
+        <a href="index.html" class="header__link">
+          Shoppies
+        </a>
       </div>
-      <div class="nominations">
-        <h3 class="nominations__title">
-          Nominations
-        </h3>
-        <ul class="nominations__list"></ul>
+      <div class="header--right">
+        <a href="project-writeup.html" class="header__link">
+          Project writeup
+        </a>
       </div>
     </div>
+  </header>
+  
+  <div class="wrapper">
+    <div class="main-content">
+      <h1 class="site-title">The Shoppies</h1>
+      <p>Please nominate 5 movies for the 2021 Shoppies</p>
+      <div class="banner hide"></div>
+      <div class="search">
+        <h3 class="search__title">Search for a movie to nominate</h3>
+        <input type="search" class="search__input" id="search" placeholder="Ex: Fight Club">
+      </div>
+      <div class="wrapper--grid">
+        <div class="results">
+          <h3 class="results__title">Results</h3>
+          <ul class="results__list"></ul>
+        </div>
+        <div class="nominations">
+          <h3 class="nominations__title">
+            Nominations
+          </h3>
+          <ul class="nominations__list"></ul>
+        </div>
+      </div>
 
+    </div>
   </div>
   
   <script src="assets/app.js"></script>
