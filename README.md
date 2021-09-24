@@ -1,5 +1,6 @@
 # The Shoppies
 ### An app to manage the nominations for the upcoming Shoppies!
+[Go to the app](https://shoppies-app.web.app/)
 ---------------
 ## Project writeup
 
